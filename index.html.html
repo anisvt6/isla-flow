@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ISLA FLOW – Surfboards · Portfolio V2.1</title>
+
+<link rel="preload" as="image" href="images/logo-floute-bg.png">
+<link rel="preload" as="image" href="images/planche1_front.png">
+<link rel="preload" as="image" href="images/planche2_front.png">
+<link rel="preload" as="image" href="images/planche3_front.png">
+
+<style>
+:root{--bg:#0b1115;--text:#e7edf1;--muted:#a9bdc9;--neon:#1dd4ff;--neon2:#8a4dff;--edge:rgba(255,255,255,.06)}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:var(--bg);overflow-x:hidden}
+
+/* Fond fixe (logo flouté) */
+.site-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.site-bg img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(92vw,1380px);max-width:1380px;filter:blur(9px) saturate(115%);opacity:.26}
+.site-bg::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(900px 660px at 18% 34%, rgba(15,70,95,.18), transparent 60%),
+  radial-gradient(760px 520px at 76% 86%, rgba(18,75,100,.16), transparent 65%)}
+body>*:not(.site-bg){position:relative;z-index:1}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(6px) saturate(140%);background:linear-gradient(180deg,rgba(11,17,21,.85),rgba(11,17,21,.45))}
+.nav-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px 16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.6px}
+.brand img{height:40px;width:40px;object-fit:cover;border-radius:16px;filter:drop-shadow(0 6px 12px rgba(0,0,0,.40)) blur(.15px) saturate(110%);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset}
+.nav a{color:var(--text);text-decoration:none;padding:10px 16px;border-radius:12px;border:1px solid var(--edge);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));transition:.2s ease}
+.nav a:hover{transform:translateY(-1px);box-shadow:0 8px 16px rgba(0,0,0,.35)}
+.cart{display:flex;align-items:center;gap:10px}
+.badge{min-width:22px;height:22px;display:grid;place-items:center;border-radius:999px;background:linear-gradient(135deg,var(--neon),var(--neon2));color:#00151c;font-weight:900;font-size:12px}
+
+/* Hero */
+.hero{min-height:70vh;display:flex;align-items:center}
+.hero-inner{max-width:1100px;margin:0 auto;padding:62px 22px 22px}
+.kicker{display:inline-block;margin-bottom:1rem;padding:.45rem .9rem;font-weight:700;font-size:.82rem;letter-spacing:.22rem;text-transform:uppercase;color:#cfeaff;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(4px)}
+.hero h1{margin:.2rem 0 1.1rem 0;font-size:clamp(46px,7vw,84px);line-height:1.06}
+.lead{color:var(--muted);font-size:clamp(16px,2.3vw,20px);max-width:860px}
+.btn{display:inline-block;margin-top:22px;padding:14px 22px;font-weight:800;text-decoration:none;color:#00151c;background:linear-gradient(135deg,var(--neon),var(--neon2));border-radius:14px;box-shadow:0 12px 26px rgba(29,212,255,.22);transition:transform .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 30px rgba(29,212,255,.28)}
+
+/* Section */
+.section{max-width:1180px;margin:0 auto;padding:12px 18px 90px}
+.section h2{font-size:clamp(30px,4vw,48px);margin:18px 0 6px}
+.section .muted{color:var(--muted)}
+.grid{margin-top:18px;display:grid;gap:24px;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.05);border-radius:16px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.35);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;cursor:pointer}
+.card:hover{transform:translateY(-3px);border-color:rgba(0,214,255,.22);box-shadow:0 16px 36px rgba(0,0,0,.45)}
+.thumb{position:relative;aspect-ratio:3/4;background:#050a0e;display:grid;place-items:center}
+.thumb img{max-width:88%;max-height:88%;transition:opacity .24s ease,transform .24s ease;filter:drop-shadow(0 20px 22px rgba(0,0,0,.38))}
+.thumb img.back{position:absolute;opacity:0}
+.card:hover .thumb img.front{opacity:0;transform:scale(1.02)}
+.card:hover .thumb img.back{opacity:1;transform:scale(1.02)}
+.meta{display:grid;gap:10px;padding:12px 16px 14px}
+.meta-row{display:flex;align-items:center;justify-content:space-between}
+.price{font-weight:900;letter-spacing:.6px;background:linear-gradient(135deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px rgba(29,212,255,.2)}
+.addline{display:flex;gap:10px}
+.add-btn{appearance:none;border:none;cursor:pointer;border-radius:10px;padding:10px 12px;font-weight:800;background:linear-gradient(135deg,var(--neon),var(--neon2));color:#00151c}
+.details-btn{appearance:none;border:1px solid var(--edge);background:transparent;color:#cfe6f1;padding:10px 12px;border-radius:10px;cursor:pointer}
+
+/* Contact */
+.contact{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01))}
+.contact::before{content:"";position:absolute;left:0;right:0;top:-48px;height:96px;background:linear-gradient(180deg,rgba(11,17,21,0),rgba(11,17,21,.55));filter:blur(12px);opacity:.85;pointer-events:none}
+.contact .inner{max-width:980px;margin:0 auto;padding:46px 18px 76px}
+.input{width:100%;max-width:540px;margin:.5rem 0 1rem;padding:14px 16px;color:var(--text);background:#0c1419;border:1px solid var(--edge);border-radius:12px}
+.footer{text-align:center;color:var(--muted);font-size:.9rem;padding:22px 18px 34px}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.reveal.is-in{opacity:1;transform:none}
+
+/* Modal Produit */
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.5);backdrop-filter:blur(4px)}
+.modal.open{display:flex}
+.modal-card{width:min(980px,94vw);background:#0f171c;color:var(--text);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55);display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:900px){.modal-card{grid-template-columns:1fr}}
+.modal-media{position:relative;background:#050a0e;display:grid;place-items:center;padding:12px}
+.modal-media img{max-width:96%;max-height:72vh;object-fit:contain}
+.modal-tabs{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:8px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);padding:6px;border-radius:999px}
+.modal-tabs button{appearance:none;border:none;padding:8px 12px;border-radius:999px;cursor:pointer;color:#cfe6f1;background:transparent}
+.modal-tabs button.active{background:linear-gradient(135deg,var(--neon),var(--neon2));color:#00151c;font-weight:800}
+.modal-body{padding:18px 18px 16px;display:grid;gap:10px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modal-title{font-weight:800;font-size:1.2rem}
+.modal-price{font-weight:900;letter-spacing:.5px;background:linear-gradient(135deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;margin:4px 0 6px}
+.specs div{color:#bed2df;font-size:.95rem}
+.modal-close{position:absolute;right:12px;top:10px;appearance:none;border:none;background:transparent;color:#d3e6f1;font-size:22px;cursor:pointer}
+
+/* Checkout (PANIER) */
+.checkout{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.5);backdrop-filter:blur(4px)}
+.checkout.open{display:flex}
+.checkout-card{width:min(760px,96vw);background:#0f171c;color:var(--text);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:18px}
+.checkout h3{margin:4px 0 12px}
+.lines{display:grid;gap:8px;margin-bottom:8px}
+.line{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:10px}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{appearance:none;border:1px solid rgba(255,255,255,.15);background:transparent;color:#cfe6f1;border-radius:8px;padding:4px 8px;cursor:pointer}
+.remove{appearance:none;border:none;background:transparent;color:#cfe6f1;cursor:pointer;font-size:18px}
+.total{display:flex;justify-content:space-between;margin:10px 0 14px;font-weight:900}
+.actions{display:flex;justify-content:flex-end;gap:10px}
+.btn-ghost{appearance:none;border:1px solid rgba(255,255,255,.12);background:transparent;color:#cfe6f1;padding:10px 14px;border-radius:10px;cursor:pointer}
+.btn-primary{appearance:none;border:none;color:#00151c;cursor:pointer;padding:12px 16px;border-radius:12px;font-weight:800;background:linear-gradient(135deg,var(--neon),var(--neon2));box-shadow:0 10px 24px rgba(29,212,255,.26)}
+.input.full{width:100%}
+</style>
+</head>
+<body>
+
+<!-- Logo flouté fixe -->
+<div class="site-bg" aria-hidden="true"><img src="images/logo-floute-bg.png" alt=""></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <img src="images/logo-round.png" alt="Isla Flow">
+      <span>ISLA FLOW</span>
+    </div>
+    <nav class="cart">
+      <a href="#shop">Collection</a>
+      <a href="#contact">Contact</a>
+      <a href="#" id="openCheckout">Panier</a>
+      <span class="badge" id="cartCount">0</span>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner reveal">
+    <span class="kicker">ISLA FLOW – SIGNATURE SERIES</span>
+    <h1>Ride the Island Vibe</h1>
+    <p class="lead">Survolez une planche pour révéler l’arrière — chaque pièce combine minimalisme nocturne et motifs océaniques japandi pour une allure premium.</p>
+    <a class="btn" href="#shop">→ Explorer la collection</a>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section id="shop" class="section">
+  <h2 class="reveal">Collection</h2>
+  <p class="muted reveal">Avant → arrière au survol — cliquez pour la fiche, ou utilisez “+” pour ajouter direct</p>
+
+  <div class="grid">
+    <!-- P1 -->
+    <article class="card reveal"
+      data-id="p1" data-title="Isla Flow – N°1" data-price="510"
+      data-len="6'2” (188 cm)" data-width="19 1/2” (49.5 cm)" data-thick="2 1/2” (6.3 cm)" data-vol="31 L"
+      data-front="images/planche1_front.png" data-back="images/planche1_back.png">
+      <div class="thumb">
+        <img class="front" src="images/planche1_front.png" alt="Planche 1 – avant" loading="lazy">
+        <img class="back"  src="images/planche1_back.png"  alt="Planche 1 – arrière" loading="lazy">
+      </div>
+      <div class="meta">
+        <div class="meta-row">
+          <strong>Planche #1</strong>
+          <span class="price">510€</span>
+        </div>
+        <div class="addline">
+          <button class="add-btn" data-add="p1" data-title="Isla Flow – N°1" data-price="510">+ Ajouter</button>
+          <button class="details-btn" data-details>Voir détails</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- P2 -->
+    <article class="card reveal"
+      data-id="p2" data-title="Isla Flow – N°2" data-price="560"
+      data-len="6'4” (193 cm)" data-width="20” (50.8 cm)" data-thick="2 5/8” (6.7 cm)" data-vol="34 L"
+      data-front="images/planche2_front.png" data-back="images/planche2_back.png">
+      <div class="thumb">
+        <img class="front" src="images/planche2_front.png" alt="Planche 2 – avant" loading="lazy">
+        <img class="back"  src="images/planche2_back.png"  alt="Planche 2 – arrière" loading="lazy">
+      </div>
+      <div class="meta">
+        <div class="meta-row">
+          <strong>Planche #2</strong>
+          <span class="price">560€</span>
+        </div>
+        <div class="addline">
+          <button class="add-btn" data-add="p2" data-title="Isla Flow – N°2" data-price="560">+ Ajouter</button>
+          <button class="details-btn" data-details>Voir détails</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- P3 -->
+    <article class="card reveal"
+      data-id="p3" data-title="Isla Flow – N°3" data-price="540"
+      data-len="6'0” (183 cm)" data-width="19” (48.3 cm)" data-thick="2 3/8” (6.0 cm)" data-vol="29 L"
+      data-front="images/planche3_front.png" data-back="images/planche3_back.png">
+      <div class="thumb">
+        <img class="front" src="images/planche3_front.png" alt="Planche 3 – avant" loading="lazy">
+        <img class="back"  src="images/planche3_back.png"  alt="Planche 3 – arrière" loading="lazy">
+      </div>
+      <div class="meta">
+        <div class="meta-row">
+          <strong>Planche #3</strong>
+          <span class="price">540€</span>
+        </div>
+        <div class="addline">
+          <button class="add-btn" data-add="p3" data-title="Isla Flow – N°3" data-price="540">+ Ajouter</button>
+          <button class="details-btn" data-details>Voir détails</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="inner reveal">
+    <h2>Contact</h2>
+    <p class="muted">Projet portfolio — formulaire démo (pas d’envoi réel).</p>
+    <form onsubmit="event.preventDefault(); alert('Merci ! (démo)'); this.reset();">
+      <input class="input" type="text" placeholder="Nom" required>
+      <input class="input" type="email" placeholder="Email" required>
+      <textarea class="input" rows="5" placeholder="Votre message…" required></textarea>
+      <br><button class="btn" type="submit">Envoyer (démo)</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">© 2025 ISLA FLOW — Portfolio concept</footer>
+
+<!-- MODAL PRODUIT -->
+<div class="modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Fermer">✕</button>
+    <div class="modal-media">
+      <img id="modalImage" src="" alt="">
+      <div class="modal-tabs">
+        <button id="tabFront" class="active" type="button">Avant</button>
+        <button id="tabBack" type="button">Arrière</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-head">
+        <div class="modal-title" id="modalTitle">Produit</div>
+        <div class="modal-price" id="modalPrice">—</div>
+      </div>
+      <div class="specs" id="modalSpecs"></div>
+      <div class="actions">
+        <button type="button" class="btn-ghost" id="addToCart">Ajouter au panier</button>
+        <button type="button" class="btn-primary" id="buyNow">Commander maintenant</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT (Panier) -->
+<div class="checkout" id="checkout" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="checkout-card">
+    <button class="modal-close" id="closeCheckout" aria-label="Fermer" style="float:right;font-size:22px;background:transparent;border:none;color:#d3e6f1;cursor:pointer">✕</button>
+    <h3>Panier</h3>
+    <div class="lines" id="cartLines"></div>
+    <div class="total"><div>Total</div><div id="cartTotal">0 €</div></div>
+    <form onsubmit="event.preventDefault(); alert('Paiement simulé (démo)');">
+      <div class="line" style="grid-template-columns:1fr"><input class="input full" type="text" placeholder="Nom complet" required></div>
+      <div class="line" style="grid-template-columns:1fr"><input class="input full" type="email" placeholder="Email" required></div>
+      <div class="line" style="grid-template-columns:1fr"><input class="input full" type="text" placeholder="Adresse" required></div>
+      <div class="line" style="grid-template-columns:1fr 1fr;gap:10px">
+        <input class="input" type="text" placeholder="Ville" required>
+        <input class="input" type="text" placeholder="Code postal" required>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-ghost" id="cancelCheckout">Annuler</button>
+        <button type="submit" class="btn-primary">Simuler paiement</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* Reveal on scroll */
+const IO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');IO.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>IO.observe(el));
+
+/* Panier */
+const cart=[], cartCount=document.getElementById('cartCount'), cartLines=document.getElementById('cartLines'), cartTotalEl=document.getElementById('cartTotal');
+const fmt=(x)=>new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(x);
+function renderCart(){
+  cartLines.innerHTML='';
+  let total=0;
+  if(!cart.length){cartLines.innerHTML="<div class='line' style='grid-template-columns:1fr'><div>Panier vide</div></div>";}
+  cart.forEach((it,i)=>{
+    total += it.price*it.qty;
+    const row=document.createElement('div');row.className='line';
+    row.innerHTML=`
+      <div>${it.title}</div>
+      <div class="qty">
+        <button data-dec="${i}">–</button>
+        <span>${it.qty}</span>
+        <button data-inc="${i}">+</button>
+      </div>
+      <button class="remove" title="Supprimer" data-del="${i}">×</button>
+    `;
+    cartLines.appendChild(row);
+  });
+  cartTotalEl.textContent=fmt(total);
+  cartCount.textContent=cart.reduce((n,i)=>n+i.qty,0);
+}
+function addToCart(obj){const f=cart.find(i=>i.id===obj.id);if(f){f.qty++}else{cart.push({...obj,qty:1})}renderCart()}
+
+/* Interactions panier (quantités +/–, supprimer) */
+cartLines.addEventListener('click',(e)=>{
+  const inc=e.target.getAttribute('data-inc'), dec=e.target.getAttribute('data-dec'), del=e.target.getAttribute('data-del');
+  if(inc!==null){cart[+inc].qty++; renderCart();}
+  if(dec!==null){cart[+dec].qty=Math.max(1,cart[+dec].qty-1); renderCart();}
+  if(del!==null){cart.splice(+del,1); renderCart();}
+});
+
+/* Checkout modal */
+const checkout=document.getElementById('checkout');
+const openCheckout=()=>{checkout.classList.add('open');checkout.setAttribute('aria-hidden','false')}
+const closeCheckout=()=>{checkout.classList.remove('open');checkout.setAttribute('aria-hidden','true')}
+document.getElementById('openCheckout').addEventListener('click',(e)=>{e.preventDefault();openCheckout()});
+document.getElementById('cancelCheckout').addEventListener('click',closeCheckout);
+document.getElementById('closeCheckout').addEventListener('click',closeCheckout);
+checkout.addEventListener('click',(e)=>{if(e.target===checkout)closeCheckout()});
+
+/* Fiche produit (modal) */
+const modal=document.getElementById('productModal');
+const modalImg=document.getElementById('modalImage');
+const modalTitle=document.getElementById('modalTitle');
+const modalPrice=document.getElementById('modalPrice');
+const modalSpecs=document.getElementById('modalSpecs');
+const tabFront=document.getElementById('tabFront');
+const tabBack=document.getElementById('tabBack');
+let currentFront="",currentBack="",currentId="",currentTitle="",currentPrice=0;
+function openModal(d){
+  currentId=d.id; currentTitle=d.title; currentPrice=Number(d.price)||0;
+  currentFront=d.front; currentBack=d.back;
+  modalTitle.textContent=d.title; modalPrice.textContent=fmt(currentPrice);
+  modalImg.src=currentFront;
+  modalSpecs.innerHTML=`
+    <div><strong>Longueur</strong></div><div>${d.len||'-'}</div>
+    <div><strong>Largeur</strong></div><div>${d.width||'-'}</div>
+    <div><strong>Épaisseur</strong></div><div>${d.thick||'-'}</div>
+    <div><strong>Volume</strong></div><div>${d.vol||'-'}</div>`;
+  tabFront.classList.add('active'); tabBack.classList.remove('active');
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+}
+function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}
+document.querySelector('.modal-close').addEventListener('click',closeModal);
+modal.addEventListener('click',(e)=>{if(e.target===modal)closeModal()});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal()});
+tabFront.addEventListener('click',()=>{modalImg.src=currentFront;tabFront.classList.add('active');tabBack.classList.remove('active')});
+tabBack.addEventListener('click',()=>{modalImg.src=currentBack;tabBack.classList.add('active');tabFront.classList.remove('active')});
+
+/* Cartes : clic ouvre fiche, bouton + ajoute au panier */
+document.querySelectorAll('.card').forEach(card=>{
+  // ouvrir fiche en cliquant sur l’image/titre
+  card.addEventListener('click',(ev)=>{
+    if(ev.target.closest('.addline')) return; // ne pas ouvrir si clic sur boutons bas
+    const d=card.dataset;
+    openModal({
+      id:d.id,title:d.title,price:d.price,len:d.len,width:d.width,thick:d.thick,vol:d.vol,
+      front:d.front,back:d.back
+    });
+  });
+  // bouton +
+  card.querySelector('.add-btn').addEventListener('click',(ev)=>{
+    ev.stopPropagation();
+    const b=ev.currentTarget, id=b.dataset.add, title=b.dataset.title, price=Number(b.dataset.price)||0;
+    addToCart({id,title,price});
+  });
+  // bouton détails
+  card.querySelector('.details-btn').addEventListener('click',(ev)=>{
+    ev.stopPropagation();
+    const d=card.dataset;
+    openModal({id:d.id,title:d.title,price:d.price,len:d.len,width:d.width,thick:d.thick,vol:d.vol,front:d.front,back:d.back});
+  });
+});
+
+/* Depuis fiche : Ajouter / Commander maintenant */
+document.getElementById('addToCart').addEventListener('click',()=>{
+  addToCart({id:currentId,title:currentTitle,price:currentPrice}); closeModal();
+});
+document.getElementById('buyNow').addEventListener('click',()=>{
+  addToCart({id:currentId,title:currentTitle,price:currentPrice}); closeModal(); openCheckout();
+});
+
+/* Init */
+renderCart();
+
+/* Smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href').slice(1), el=document.getElementById(id);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+</script>
+</body>
+</html>
+
